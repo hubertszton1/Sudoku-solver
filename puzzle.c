@@ -1,6 +1,6 @@
 #include "sudoku.h"
 
-int ** create_puzzle(){
+int ** createPuzzle(){
     int ** puzzle;
     int i, j;
     int array[9][9] = { 0, 0, 1,   7, 6, 0,    9, 0, 0,
@@ -32,7 +32,7 @@ int ** create_puzzle(){
     return puzzle;
 }
 
-void print_puzzle(int ** puzzle)
+void printPuzzle(int ** puzzle)
 {
     int i, j;
 

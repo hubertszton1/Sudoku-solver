@@ -3,8 +3,8 @@
 int main(){
 
     int ** puzzle;
-    puzzle = create_puzzle();
+    puzzle = createPuzzle();
 
-    print_puzzle(puzzle);
+    printPuzzle(puzzle);
     return 0;
 }
