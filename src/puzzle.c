@@ -7,11 +7,11 @@ Cell *** setUpPuzzle(int ** puzzle)
 
     sudoku = (Cell***)malloc(sizeof(Cell**)*9);
     // loop through rows
-    for (i = 0; i < 9; i++)
+    for (i = 0; i < SIZE_ROWS; i++)
     {
         sudoku[i] = (Cell**)malloc(sizeof(Cell*)*9);
         //loop through columns
-        for (j = 0; j < 9; j++)
+        for (j = 0; j < SIZE_COLUMNS; j++)
         {   
             // update informations of current cell
             sudoku[i][j] = (Cell*)malloc(sizeof(Cell)*9);
@@ -70,11 +70,11 @@ void printPuzzle(int ** puzzle)
 
     printf("\n-------------------------------\n");
     // iterate through all rows
-    for (i = 0; i < 9; i++)
+    for (i = 0; i < SIZE_ROWS; i++)
     {   
         printf("|");
         // iterate through each cell in a row
-        for (j = 0; j < 9; j++)
+        for (j = 0; j < SIZE_COLUMNS; j++)
         {
             printf(" %d ", puzzle[i][j]);
             if ((j+1) % 3 == 0)
