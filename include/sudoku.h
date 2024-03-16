@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char POSSIBLE = 0b111111111;
+char POSSIBLE = 0x1FF;
 
 typedef struct Box
 {
