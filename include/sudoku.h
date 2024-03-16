@@ -3,12 +3,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
-extern char POSSIBLE;
+// 
+extern int UNSOLVED;
 extern int SIZE_ROWS;
 extern int SIZE_COLUMNS;
 
-
+// structs declarations
 typedef struct Box
 {
     struct Box * next;
@@ -19,14 +19,20 @@ typedef struct Cell
     int number;
     // 9 bits in variable possible
     // each bit represents wheter you can put the digit into a cell
-    char code;
+    int possible[9];
+    int solvable;
     int row;
     int column;
     Box * box;
 } Cell;
 
+
+// functions declarations
 int ** createPuzzle();
-void printPuzzle(int ** puzzle);
+void printPuzzle(Cell *** puzzle);
 Cell *** setUpPuzzle(int ** puzzle);
+int updateSudoku(Cell *** sudoku, int row, int column);
+int checkPuzzle(Cell *** sudoku);
+int solveCell(Cell * cell);
 
 #endif

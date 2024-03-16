@@ -3,7 +3,7 @@
 Cell *** setUpPuzzle(int ** puzzle)
 {
     Cell *** sudoku;
-    int i, j;
+    int i, j, k;
 
     sudoku = (Cell***)malloc(sizeof(Cell**)*9);
     // loop through rows
@@ -19,17 +19,73 @@ Cell *** setUpPuzzle(int ** puzzle)
             sudoku[i][j]->row = i;
             sudoku[i][j]->column = j;
 
-            if (sudoku[i][j]->number != 0)
+            sudoku[i][j]->solvable = 9;
+
+            for (k = 0; k < SIZE_ROWS; k++)
             {
-                sudoku[i][j]->code = POSSIBLE;
-            }
-            else
-            {
-                sudoku[i][j]->code = 0b000000000;
+                sudoku[i][j]->possible[k] = 0;
             }
         }
     }
 
+    for (i = 0; i < SIZE_ROWS; i++)
+    {
+        //loop through columns
+        for (j = 0; j < SIZE_COLUMNS; j++)
+        {
+            if (sudoku[i][j]->number != 0)
+            {
+                sudoku[i][j]->solvable = 0;
+                updateSudoku(sudoku, i, j);
+                UNSOLVED--;
+            }
+        }
+    }
+    return sudoku;
+}
+
+int updateSudoku(Cell *** sudoku, int row, int column)
+{
+    int x;
+    int number = sudoku[row][column]->number;
+
+    for (x=0; x < SIZE_ROWS; x++)
+    {
+        if (sudoku[x][column]->possible[number - 1] == 0)
+        {
+            sudoku[x][column]->solvable--;
+        }
+        sudoku[x][column]->possible[number - 1] = 1;
+    }
+
+    for (x=0; x < SIZE_COLUMNS; x++)
+    {
+        if (sudoku[row][x]->possible[number - 1] == 0)
+        {
+            sudoku[row][x]->solvable--;
+        }
+        sudoku[row][x]->possible[number - 1] = 1;
+    }
+
+    return 1;
+}
+
+int checkPuzzle(Cell *** sudoku)
+{
+    int i, j, k;
+
+    for (i = 0; i < SIZE_ROWS; i++)
+    {
+        for (j = 0; j < SIZE_COLUMNS; j++)
+        {
+            if (sudoku[i][j]->solvable == 1)
+            {
+                solveCell(sudoku[i][j]);
+                updateSudoku(sudoku, i, j);
+            }
+        }
+    }
+    return 1;
 }
 
 int ** createPuzzle(){
@@ -64,7 +120,7 @@ int ** createPuzzle(){
     return puzzle;
 }
 
-void printPuzzle(int ** puzzle)
+void printPuzzle(Cell *** puzzle)
 {
     int i, j;
 
@@ -76,7 +132,7 @@ void printPuzzle(int ** puzzle)
         // iterate through each cell in a row
         for (j = 0; j < SIZE_COLUMNS; j++)
         {
-            printf(" %d ", puzzle[i][j]);
+            printf(" %d ", puzzle[i][j]->number);
             if ((j+1) % 3 == 0)
             {
                 printf("|");
