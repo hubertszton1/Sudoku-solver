@@ -3,9 +3,12 @@
 Cell *** setUpPuzzle(int ** puzzle)
 {
     Cell *** sudoku;
+    Box ** boxes; 
     int i, j, k;
+    int currentBox = 0;
 
     sudoku = (Cell***)malloc(sizeof(Cell**)*9);
+    boxes = createBoxes();
     // loop through rows
     for (i = 0; i < SIZE_ROWS; i++)
     {
@@ -18,14 +21,39 @@ Cell *** setUpPuzzle(int ** puzzle)
             sudoku[i][j]->number = puzzle[i][j];
             sudoku[i][j]->row = i;
             sudoku[i][j]->column = j;
-
             sudoku[i][j]->solvable = 9;
 
+            // each box points to its cells
+            // and each cell points to its box
+            boxes[currentBox]->cells[ boxes[currentBox]->numbers ] = sudoku[i][j];
+            sudoku[i][j]->box = boxes[currentBox];
+            boxes[currentBox]->numbers++;
             for (k = 0; k < SIZE_ROWS; k++)
             {
                 sudoku[i][j]->possible[k] = 0;
             }
+
+            if (j == 2)
+            {
+                currentBox++;
+            }
+            if (j == 5)
+            {
+                currentBox++;
+            }
         }
+        // return to the box on the left of the board
+        currentBox -= 2;
+
+        if(i == 2)
+        {
+            currentBox = 3;
+        }
+        if (i == 5)
+        {
+            currentBox = 6;
+        }
+
     }
 
     for (i = 0; i < SIZE_ROWS; i++)
@@ -37,6 +65,7 @@ Cell *** setUpPuzzle(int ** puzzle)
             {
                 sudoku[i][j]->solvable = 0;
                 updateSudoku(sudoku, i, j);
+                updateBoxes(sudoku, i, j);
                 UNSOLVED--;
             }
         }
@@ -91,17 +120,17 @@ int checkPuzzle(Cell *** sudoku)
 int ** createPuzzle(){
     int ** puzzle;
     int i, j;
-    int array[9][9] = { 0, 0, 1,   7, 6, 0,    9, 0, 0,
-                        8, 2, 0,   0, 0, 0,    0, 0, 3,
-                        0, 4, 9,   0, 0, 1,    0, 0, 0,
+    int array[9][9] = { 0, 1, 9,   0, 0, 2,    0, 0, 0,
+                        4, 7, 0,   9, 6, 0,    0, 0, 1,
+                        0, 0, 0,   4, 0, 0,    0, 9, 0,
 
-                        2, 0, 0,   9, 3, 0,    7, 0, 0,
-                        0, 0, 6,   0, 1, 7,    0, 3, 0,
-                        0, 0, 0,   0, 2, 0,    0, 0, 0,
+                        8, 9, 4,   5, 0, 7,    0, 0, 0,
+                        0, 0, 0,   0, 0, 0,    0, 0, 0,
+                        0, 0, 0,   2, 0, 1,    9, 5, 8,
                 
-                        0, 0, 0,   0, 0, 5,    0, 0, 8,
-                        0, 0, 0,   6, 0, 0,    0, 0, 0,
-                        0, 7, 0,   0, 0, 0,    5, 0, 1};
+                        0, 5, 0,   0, 0, 6,    0, 0, 0,
+                        6, 0, 0,   0, 2, 8,    0, 7, 9,
+                        0, 0, 0,   1, 0, 0,    8, 6, 0};
 
     // allocate memory for two-dimensional array of size 9x9
     puzzle = (int**)malloc(sizeof(int*)*9);
