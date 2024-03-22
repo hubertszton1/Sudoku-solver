@@ -9,6 +9,12 @@ extern int SIZE_ROWS;
 extern int SIZE_COLUMNS;
 
 // structs declarations
+typedef struct Sudoku
+{
+    struct Cell *** cells;
+    struct Box ** boxes;
+} Sudoku;
+
 typedef struct Box
 {   
     struct Cell ** cells;
@@ -34,7 +40,8 @@ typedef struct Cell
 // functions declarations
 int ** createPuzzle();
 void printPuzzle(Cell *** puzzle);
-Cell *** setUpPuzzle(int ** puzzle);
+Sudoku * setUpPuzzle(int ** puzzle);
+Sudoku * createSudoku(Cell *** cells, Box ** boxes);
 int updateSudoku(Cell *** sudoku, int row, int column);
 int checkPuzzle(Cell *** sudoku);
 int solveCell(Cell * cell);

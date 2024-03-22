@@ -7,17 +7,17 @@ int SIZE_COLUMNS = 9;
 int main(){
 
     int ** puzzle;
-    Cell *** sudoku;
+    Sudoku * sudoku;
     puzzle = createPuzzle();
 
     sudoku = setUpPuzzle(puzzle);
 
-    printPuzzle(sudoku);
+    printPuzzle(sudoku->cells);
 
     checkPuzzle(sudoku);
     
     printf("\n\n");
 
-    printPuzzle(sudoku);
+    printPuzzle(sudoku->cells);
     return 0;
 }
