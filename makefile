@@ -15,4 +15,4 @@ run:
 	@./sudoku
 
 clean:
-	@rm sudoku
+	@del sudoku.exe
