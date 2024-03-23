@@ -111,7 +111,7 @@ int updateSudoku(Cell *** sudoku, int row, int column)
     return 1;
 }
 
-int checkPuzzle(Cell *** sudoku)
+int checkPuzzle(Cell *** sudoku, Box ** boxes)
 {
     int i, j, k;
 
@@ -124,13 +124,13 @@ int checkPuzzle(Cell *** sudoku)
                 solveCell(sudoku[i][j]);
                 updateSudoku(sudoku, i, j);
                 updateBoxes(sudoku, i, j);
+
+                return 1;
             }
         }
     }
 
-    //boxSingles(sudoku);
-
-    return 1;
+    return boxSingles(sudoku, boxes);
 }
 
 int ** createPuzzle(){

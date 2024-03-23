@@ -43,9 +43,10 @@ void printPuzzle(Cell *** puzzle);
 Sudoku * setUpPuzzle(int ** puzzle);
 Sudoku * createSudoku(Cell *** cells, Box ** boxes);
 int updateSudoku(Cell *** sudoku, int row, int column);
-int checkPuzzle(Cell *** sudoku);
+int checkPuzzle(Cell *** sudoku, Box ** boxes);
 int solveCell(Cell * cell);
 Box ** createBoxes();
 int updateBoxes(Cell *** sudoku, int row, int column);
+int boxSingles(Cell *** sudoku, Box ** boxes);
 
 #endif
