@@ -48,5 +48,6 @@ int solveCell(Cell * cell);
 Box ** createBoxes();
 int updateBoxes(Cell *** sudoku, int row, int column);
 int boxSingles(Cell *** sudoku, Box ** boxes);
+int checkRows(Cell *** sudoku, Box ** boxes);
 
 #endif
